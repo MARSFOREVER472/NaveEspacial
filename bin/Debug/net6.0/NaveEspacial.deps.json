@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "NaveEspacial/1.0.0": {
+        "runtime": {
+          "NaveEspacial.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NaveEspacial/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

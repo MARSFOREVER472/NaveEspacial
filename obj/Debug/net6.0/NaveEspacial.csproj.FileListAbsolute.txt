@@ -1,0 +1,15 @@
+C:\Users\mars_\source\Repos\NaveEspacial\bin\Debug\net6.0\NaveEspacial.exe
+C:\Users\mars_\source\Repos\NaveEspacial\bin\Debug\net6.0\NaveEspacial.deps.json
+C:\Users\mars_\source\Repos\NaveEspacial\bin\Debug\net6.0\NaveEspacial.runtimeconfig.json
+C:\Users\mars_\source\Repos\NaveEspacial\bin\Debug\net6.0\NaveEspacial.dll
+C:\Users\mars_\source\Repos\NaveEspacial\bin\Debug\net6.0\NaveEspacial.pdb
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.csproj.AssemblyReference.cache
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.AssemblyInfoInputs.cache
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.AssemblyInfo.cs
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.csproj.CoreCompileInputs.cache
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.dll
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\refint\NaveEspacial.dll
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.pdb
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\NaveEspacial.genruntimeconfig.cache
+C:\Users\mars_\source\Repos\NaveEspacial\obj\Debug\net6.0\ref\NaveEspacial.dll

@@ -29,12 +29,14 @@ namespace NaveEspacial.Project
         {
             Console.SetWindowSize(Ancho, Altura);
             Console.Title = "Nave";
+            Console.CursorVisible = false;
             Console.BackgroundColor = Color;
             Console.Clear();
         }
 
         public void DibujarMarco()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             for (int i = LimiteSuperior.X; i <= LimiteInferior.X; i++)
             {
                 Console.SetCursorPosition(i, LimiteSuperior.Y);

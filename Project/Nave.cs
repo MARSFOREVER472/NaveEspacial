@@ -82,7 +82,21 @@ namespace NaveEspacial.Project
 
             distancia.X *= velocidad;
             distancia.Y *= velocidad;
-            Posicion = new Point(Posicion.X + distancia.X, Posicion.Y + distancia.Y);
+        }
+
+        public void Colisiones(Point distancia) // Aquí se realizan las colisiones para que no sobrepase por el marco dibujado.
+        {
+            Point posicionAux = new Point(Posicion.X + distancia.X, Posicion.Y + distancia.Y);
+            if (posicionAux.X <= VentanaC.LimiteSuperior.X) // Para el lado izquierdo del marco.
+                posicionAux.X = VentanaC.LimiteSuperior.X + 1;
+            if (posicionAux.X + 6 >= VentanaC.LimiteInferior.X) // Para el lado derecho del marco.
+                posicionAux.X = VentanaC.LimiteInferior.X - 7;
+            if (posicionAux.Y <= VentanaC.LimiteSuperior.Y) // Para la parte superior del marco.
+                posicionAux.Y = VentanaC.LimiteSuperior.Y + 1;
+            if (posicionAux.Y + 2 >= VentanaC.LimiteInferior.Y) // Para la parte inferior del marco.
+                posicionAux.Y = VentanaC.LimiteInferior.Y - 3;
+
+            Posicion = posicionAux;
         }
 
         public void Mover(int velocidad)
@@ -92,6 +106,7 @@ namespace NaveEspacial.Project
                 Borrar();
                 Point distancia = new Point();
                 Teclado(ref distancia, velocidad);
+                Colisiones(distancia);
                 Dibujar();
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using NaveEspacial.Project.Graphic_elements;
 
 namespace NaveEspacial.Project
 {
@@ -14,6 +15,7 @@ namespace NaveEspacial.Project
         public ConsoleColor Color { get; set; }
         public Ventana VentanaC { get; set; }
         public List<Point> PosicionesNave { get; set; }
+        public List<Bala> Balas { get; set; }
 
         public Nave(Point posicion, ConsoleColor color, Ventana ventana)
         {
@@ -22,6 +24,7 @@ namespace NaveEspacial.Project
             VentanaC = ventana;
             Vida = 100;
             PosicionesNave = new List<Point>();
+            Balas = new List<Bala>();
         }
 
         public void Dibujar()
@@ -82,6 +85,27 @@ namespace NaveEspacial.Project
 
             distancia.X *= velocidad;
             distancia.Y *= velocidad;
+
+            if (tecla.Key == ConsoleKey.RightArrow)
+            {
+                Bala bala = new Bala(new Point(Posicion.X + 6, Posicion.Y + 2),
+                    ConsoleColor.Blue, TipoBala.Normal);
+                Balas.Add(bala);
+            }
+
+            if (tecla.Key == ConsoleKey.LeftArrow)
+            {
+                Bala bala = new Bala(new Point(Posicion.X, Posicion.Y + 2),
+                    ConsoleColor.Blue, TipoBala.Normal);
+                Balas.Add(bala);
+            }
+
+            if (tecla.Key == ConsoleKey.UpArrow)
+            {
+                Bala bala = new Bala(new Point(Posicion.X + 2, Posicion.Y - 2),
+                    ConsoleColor.Blue, TipoBala.Especial);
+                Balas.Add(bala);
+            }
         }
 
         public void Colisiones(Point distancia) // Aquí se realizan las colisiones para que no sobrepase por el marco dibujado.
@@ -99,6 +123,13 @@ namespace NaveEspacial.Project
             Posicion = posicionAux;
         }
 
+        public void Informacion()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(VentanaC.LimiteSuperior.X, VentanaC.LimiteSuperior.Y - 1);
+            Console.Write(" Spaceship Health: " + (int)Vida + "% ");
+        }
+
         public void Mover(int velocidad)
         {
             if (Console.KeyAvailable)
@@ -108,6 +139,18 @@ namespace NaveEspacial.Project
                 Teclado(ref distancia, velocidad);
                 Colisiones(distancia);
                 Dibujar();
+            }
+            Informacion();
+        }
+
+        public void Disparar()
+        {
+            for (int i = 0; i < Balas.Count; i++)
+            {
+                if (Balas[i].Mover(1, VentanaC.LimiteSuperior.Y))
+                {
+                    Balas.Remove(Balas[i]);
+                }
             }
         }
     }

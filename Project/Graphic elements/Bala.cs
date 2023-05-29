@@ -17,12 +17,14 @@ namespace NaveEspacial.Project.Graphic_elements
         public ConsoleColor Color { get; set; }
         public TipoBala TipoBala1 { get; set; }
         public List<Point> PosicionesBala { get; set; }
+        private DateTime _tiempo;
         public Bala(Point posicion, ConsoleColor color, TipoBala tipoBala)
         {
             Posicion = posicion;
             Color = color;
             TipoBala1 = tipoBala;
             PosicionesBala = new List<Point>();
+            _tiempo = DateTime.Now;
         }
 
         public void Dibujar() // Dibuja las balas de la nave
@@ -68,25 +70,29 @@ namespace NaveEspacial.Project.Graphic_elements
 
         public bool Mover(int velocidad, int limite)
         {
-            Borrar();
-
-            switch (TipoBala1)
-
+            if (DateTime.Now > _tiempo.AddMilliseconds(30))
             {
-                case TipoBala.Normal:
-                    Posicion = new Point(Posicion.X, Posicion.Y - velocidad);
-                    if (Posicion.Y <= limite)
-                        return true;
-                    break;
+                Borrar();
 
-                case TipoBala.Especial:
-                    Posicion = new Point(Posicion.X, Posicion.Y - velocidad);
-                    if (Posicion.Y <= limite)
-                        return true;
-                    break;
+                switch (TipoBala1)
+
+                {
+                    case TipoBala.Normal:
+                        Posicion = new Point(Posicion.X, Posicion.Y - velocidad);
+                        if (Posicion.Y <= limite)
+                            return true;
+                        break;
+
+                    case TipoBala.Especial:
+                        Posicion = new Point(Posicion.X, Posicion.Y - velocidad);
+                        if (Posicion.Y <= limite)
+                            return true;
+                        break;
+                }
+
+                Dibujar();
+                _tiempo = DateTime.Now;
             }
-
-            Dibujar();
             return false;
         }
     }

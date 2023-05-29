@@ -16,6 +16,7 @@ namespace NaveEspacial.Project
         public Ventana VentanaC { get; set; }
         public List<Point> PosicionesNave { get; set; }
         public List<Bala> Balas { get; set; }
+        public float SobreCarga { get; set; }
 
         public Nave(Point posicion, ConsoleColor color, Ventana ventana)
         {
@@ -128,6 +129,10 @@ namespace NaveEspacial.Project
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(VentanaC.LimiteSuperior.X, VentanaC.LimiteSuperior.Y - 1);
             Console.Write(" Spaceship Health: " + (int)Vida + "% ");
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 23, VentanaC.LimiteSuperior.Y - 1);
+            Console.Write(" Overload: " + (int)SobreCarga + "% ");
         }
 
         public void Mover(int velocidad)

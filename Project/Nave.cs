@@ -17,6 +17,7 @@ namespace NaveEspacial.Project
         public List<Point> PosicionesNave { get; set; }
         public List<Bala> Balas { get; set; }
         public float SobreCarga { get; set; }
+        public bool SobreCargaCond { get; set; }
 
         public Nave(Point posicion, ConsoleColor color, Ventana ventana)
         {
@@ -87,18 +88,44 @@ namespace NaveEspacial.Project
             distancia.X *= velocidad;
             distancia.Y *= velocidad;
 
-            if (tecla.Key == ConsoleKey.RightArrow)
+            if (tecla.Key == ConsoleKey.RightArrow) // Si se presionó la tecla derecha
             {
-                Bala bala = new Bala(new Point(Posicion.X + 6, Posicion.Y + 2),
+                if (!SobreCargaCond)
+                {
+                    Bala bala = new Bala(new Point(Posicion.X + 6, Posicion.Y + 2),
                     ConsoleColor.Blue, TipoBala.Normal);
-                Balas.Add(bala);
+                    Balas.Add(bala);
+
+                    SobreCarga += 1.2f;
+                    if (SobreCarga >= 100)
+                    {
+                        SobreCargaCond = true;
+                        SobreCarga = 100;
+                    }
+
+                }
+                
+                 
             }
 
-            if (tecla.Key == ConsoleKey.LeftArrow)
+            if (tecla.Key == ConsoleKey.LeftArrow) // Si se presionó la tecla izquierda
             {
-                Bala bala = new Bala(new Point(Posicion.X, Posicion.Y + 2),
+                if (!SobreCargaCond)
+                {
+                    Bala bala = new Bala(new Point(Posicion.X, Posicion.Y + 2),
                     ConsoleColor.Blue, TipoBala.Normal);
-                Balas.Add(bala);
+                    Balas.Add(bala);
+
+                    SobreCarga += 1.2f;
+                    if (SobreCarga >= 100)
+                    {
+                        SobreCargaCond = true;
+                        SobreCarga = 100;
+                    }
+                        
+
+                }
+                
             }
 
             if (tecla.Key == ConsoleKey.UpArrow)
@@ -129,6 +156,11 @@ namespace NaveEspacial.Project
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(VentanaC.LimiteSuperior.X, VentanaC.LimiteSuperior.Y - 1);
             Console.Write(" Spaceship Health: " + (int)Vida + "% ");
+
+            if (SobreCarga <= 0) // Al momento de disparar, ésta se disminuye cuando no se sobrecarga
+                SobreCarga = 0;
+            else
+                SobreCarga -= 0.0007f;
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 23, VentanaC.LimiteSuperior.Y - 1);

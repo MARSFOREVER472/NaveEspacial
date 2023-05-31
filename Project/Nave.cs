@@ -18,6 +18,7 @@ namespace NaveEspacial.Project
         public List<Bala> Balas { get; set; }
         public float SobreCarga { get; set; }
         public bool SobreCargaCond { get; set; }
+        public float BalaEspecial { get; set; }
 
         public Nave(Point posicion, ConsoleColor color, Ventana ventana)
         {
@@ -130,9 +131,13 @@ namespace NaveEspacial.Project
 
             if (tecla.Key == ConsoleKey.UpArrow)
             {
-                Bala bala = new Bala(new Point(Posicion.X + 2, Posicion.Y - 2),
+                if (BalaEspecial >= 100)
+                {
+                    Bala bala = new Bala(new Point(Posicion.X + 2, Posicion.Y - 2),
                     ConsoleColor.Blue, TipoBala.Especial);
-                Balas.Add(bala);
+                    Balas.Add(bala);
+                    BalaEspecial = 0;
+                }
             }
         }
 
@@ -160,11 +165,28 @@ namespace NaveEspacial.Project
             if (SobreCarga <= 0) // Al momento de disparar, ésta se disminuye cuando no se sobrecarga
                 SobreCarga = 0;
             else
-                SobreCarga -= 0.0007f;
+                SobreCarga += 0.0007f;
+
+            if (SobreCarga <= 50)
+                SobreCargaCond = false;
+
+            if (SobreCargaCond)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 23, VentanaC.LimiteSuperior.Y - 1);
             Console.Write(" Overload: " + (int)SobreCarga + "% ");
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 42, VentanaC.LimiteSuperior.Y - 1);
+            Console.Write(" Special Bullet: " + (int)BalaEspecial + "% ");
+
+            if (BalaEspecial <= 100)
+                BalaEspecial = 100;
+            else
+                BalaEspecial += -0.0050f;
         }
 
         public void Mover(int velocidad)

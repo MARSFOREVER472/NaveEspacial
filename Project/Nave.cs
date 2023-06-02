@@ -148,8 +148,8 @@ namespace NaveEspacial.Project
                 posicionAux.X = VentanaC.LimiteSuperior.X + 1;
             if (posicionAux.X + 6 >= VentanaC.LimiteInferior.X) // Para el lado derecho del marco.
                 posicionAux.X = VentanaC.LimiteInferior.X - 7;
-            if (posicionAux.Y <= VentanaC.LimiteSuperior.Y) // Para la parte superior del marco.
-                posicionAux.Y = VentanaC.LimiteSuperior.Y + 1;
+            if (posicionAux.Y <= (VentanaC.LimiteSuperior.Y)+ 15) // Para la parte superior del marco.
+                posicionAux.Y = (VentanaC.LimiteSuperior.Y + 1) + 15;
             if (posicionAux.Y + 2 >= VentanaC.LimiteInferior.Y) // Para la parte inferior del marco.
                 posicionAux.Y = VentanaC.LimiteInferior.Y - 3;
 
@@ -165,7 +165,7 @@ namespace NaveEspacial.Project
             if (SobreCarga <= 0) // Al momento de disparar, ésta se disminuye cuando no se sobrecarga
                 SobreCarga = 0;
             else
-                SobreCarga += 0.0007f;
+                SobreCarga -= 0.0007f;
 
             if (SobreCarga <= 50)
                 SobreCargaCond = false;
@@ -180,13 +180,14 @@ namespace NaveEspacial.Project
             Console.Write(" Overload: " + (int)SobreCarga + "% ");
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 42, VentanaC.LimiteSuperior.Y - 1);
+            Console.SetCursorPosition(VentanaC.LimiteSuperior.X + 38, VentanaC.LimiteSuperior.Y - 1);
             Console.Write(" Special Bullet: " + (int)BalaEspecial + "% ");
 
             if (BalaEspecial <= 100)
                 BalaEspecial = 100;
             else
-                BalaEspecial += -0.0050f;
+                BalaEspecial += 0.0007f;
+
         }
 
         public void Mover(int velocidad)
@@ -210,6 +211,24 @@ namespace NaveEspacial.Project
                 {
                     Balas.Remove(Balas[i]);
                 }
+            }
+        }
+
+        public void Muerte()
+        {
+            Console.ForegroundColor = Color;
+            foreach (Point item in PosicionesNave)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("X");
+                Thread.Sleep(200);
+            }
+
+            foreach (Point item in PosicionesNave)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write(" ");
+                Thread.Sleep(200);
             }
         }
     }

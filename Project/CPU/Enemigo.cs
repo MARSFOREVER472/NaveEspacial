@@ -13,13 +13,21 @@ namespace NaveEspacial.Project.CPU
     }
     internal class Enemigo
     {
-        public bool Vivo { get; set; }
-        public float Vida { get; set; }
+        enum Direccion // Agregamos el movimiento del enemigo en distintas direcciones
+        {
+            Derecha,Izquierda,Arriba,Abajo
+        }
+        
+        public bool Vivo { get; set; } // Verifica si está vivo o no
+        public float Vida { get; set; } // Añade una vida al enemigo
         public Point Posicion { get; set; }
         public Ventana VentanaC { get; set; }
         public ConsoleColor Color { get; set; }
         public TipoEnemigo EnemyType { get; set; }
         public List<Point> PosicionesEnemigo { get; set; }
+        private Direccion _direccion;
+        private DateTime _tiempoDireccion;
+        private float _tiempoDireccionAleatoria;
 
         public Enemigo(Point posicion, ConsoleColor color, Ventana ventana, 
             TipoEnemigo enemytype)
@@ -30,6 +38,9 @@ namespace NaveEspacial.Project.CPU
             EnemyType = enemytype;
             Vivo = true;
             Vida = 100;
+            _direccion = Direccion.Derecha;
+            _tiempoDireccion = DateTime.Now;
+            _tiempoDireccionAleatoria = 1000;
             PosicionesEnemigo = new List<Point>();
         }
 
@@ -117,6 +128,63 @@ namespace NaveEspacial.Project.CPU
             {
                 Console.SetCursorPosition(item.X, item.Y);
                 Console.Write(" ");
+            }
+        }    
+
+        public void Mover()
+        {
+            Borrar();
+            DireccionAleatoria();
+            Point posicionAux = Posicion;
+            Movimiento(ref posicionAux);
+            Dibujar();
+        }
+
+        public void Movimiento(ref Point posicionAux)
+        {
+            switch (_direccion)
+            {
+                case Direccion.Derecha:
+                    posicionAux.X += 1;
+                    break;
+                case Direccion.Izquierda:
+                    posicionAux.X -= 1;
+                    break;
+                case Direccion.Arriba:
+                    posicionAux.Y -= 1;
+                    break;
+                case Direccion.Abajo:
+                    posicionAux.Y += 1;
+                    break;
+
+            }
+        }
+
+        public void DireccionAleatoria()
+        {
+            if (DateTime.Now >_tiempoDireccion.AddMilliseconds(_tiempoDireccionAleatoria))
+            {
+                Random random = new Random();
+                int numAleatorio = random.Next(1, 5);
+
+                switch (numAleatorio)
+                {
+                    case 1:
+                        _direccion = Direccion.Derecha;
+                        break;
+                    case 2:
+                        _direccion = Direccion.Izquierda;
+                        break;
+                    case 3:
+                        _direccion = Direccion.Arriba;
+                        break;
+                    case 4:
+                        _direccion = Direccion.Abajo;
+                        break;
+                }
+
+                _tiempoDireccion = DateTime.Now;
+                _tiempoDireccionAleatoria = random.Next(1000, 2000);
             }
         }
     }

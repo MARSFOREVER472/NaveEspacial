@@ -28,6 +28,7 @@ namespace NaveEspacial.Project.CPU
         private Direccion _direccion;
         private DateTime _tiempoDireccion;
         private float _tiempoDireccionAleatoria;
+        private DateTime _tiempoMovimiento;
 
         public Enemigo(Point posicion, ConsoleColor color, Ventana ventana, 
             TipoEnemigo enemytype)
@@ -42,6 +43,7 @@ namespace NaveEspacial.Project.CPU
             _tiempoDireccion = DateTime.Now;
             _tiempoDireccionAleatoria = 1000;
             PosicionesEnemigo = new List<Point>();
+            _tiempoMovimiento = DateTime.Now;
         }
 
         public void Dibujar()
@@ -133,11 +135,57 @@ namespace NaveEspacial.Project.CPU
 
         public void Mover()
         {
-            Borrar();
-            DireccionAleatoria();
-            Point posicionAux = Posicion;
-            Movimiento(ref posicionAux);
-            Dibujar();
+            int tiempo = 30;
+
+            if (EnemyType == TipoEnemigo.Boss)
+                tiempo = 20;
+
+            if (DateTime.Now > _tiempoMovimiento.AddMilliseconds(tiempo))
+            {
+                Borrar();
+                DireccionAleatoria();
+                Point posicionAux = Posicion;
+                Movimiento(ref posicionAux);
+                Colisiones(posicionAux);
+                Dibujar();
+                _tiempoMovimiento = DateTime.Now;
+            }
+            
+        }
+
+        public void Colisiones(Point posicionAux)
+        {
+            int ancho = 0;
+
+            if (EnemyType == TipoEnemigo.Boss)
+                ancho = 7;
+
+            if (posicionAux.X <= VentanaC.LimiteSuperior.X)
+            {
+                _direccion = Direccion.Derecha;
+                posicionAux.X = VentanaC.LimiteSuperior.X + 1;
+            }
+                
+            if (posicionAux.X + ancho >= VentanaC.LimiteInferior.X)
+            {
+                _direccion = Direccion.Izquierda;
+                posicionAux.X = VentanaC.LimiteInferior.X - 1 + ancho;
+            }
+                
+            if (posicionAux.Y <= VentanaC.LimiteSuperior.Y)
+            {
+                _direccion = Direccion.Abajo;
+                posicionAux.Y = VentanaC.LimiteSuperior.Y + 1;
+            }
+                
+            if (posicionAux.Y >= VentanaC.LimiteSuperior.Y + 5)
+            {
+                _direccion = Direccion.Arriba;
+                posicionAux.Y = VentanaC.LimiteSuperior.Y + 5 - 2;
+            }
+                
+
+            Posicion = posicionAux;
         }
 
         public void Movimiento(ref Point posicionAux)
